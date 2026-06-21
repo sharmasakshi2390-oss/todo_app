@@ -11,7 +11,7 @@ export const getAllTodos = async (req, res) => {
 };
 
 export const addTodo = async (req, res) => {
-  const { title } = req.body;
+  const { title, completed } = req.body;
 
   const todo = await createTodo(title, req.user.id);
 
@@ -21,12 +21,13 @@ export const addTodo = async (req, res) => {
 export const editTodo = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title } = req.body;
+    const { title, completed } = req.body;
 
     // FIX: id convert to Number
     const todo = await updateTodo(
       Number(id),
       title,
+      completed,
       req.user.id
     );
 

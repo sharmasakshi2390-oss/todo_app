@@ -15,7 +15,7 @@ export const createTodo = async (title, userId) => {
   });
 };
 
-export const updateTodo = async (id, title, userId) => {
+export const updateTodo = async (id, title,completed, userId) => {
       const todo = await prisma.todo.findFirst({
     where: {
       id: Number(id),
@@ -32,7 +32,8 @@ export const updateTodo = async (id, title, userId) => {
       id: Number(id),
     },
     data: {
-      title,
+      ...(title !== undefined && { title }),
+      ...(completed !== undefined && { completed }),
     },
   });
 };

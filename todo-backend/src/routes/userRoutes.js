@@ -5,7 +5,9 @@ import {
     registerUser,
     getAllUsers,
     loginUser,
-    getProfile
+    getProfile,
+    updateProfile,
+    updatePassword
  } from "../controllers/userController.js";
 
 const router = express.Router();
@@ -14,5 +16,7 @@ router.post("/register", registerUser);
 router.get("/users", getAllUsers);
 router.post("/login", loginUser);
 router.get("/profile", authMiddleware, getProfile);
+router.patch("/profile", authMiddleware, updateProfile);
+router.patch("/change-password", authMiddleware, updatePassword);
 
 export default router;
