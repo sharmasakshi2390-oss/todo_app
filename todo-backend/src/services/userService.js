@@ -76,3 +76,65 @@ return await prisma.user.update({
   },
 });
 };
+
+export const verifyUserEmail = async (token) => {
+  const user = await prisma.user.findFirst({
+    where: {
+      verifyToken: token,
+    },
+  });
+
+  if (!user) {
+    throw new Error("Invalid token");
+  }
+
+  return await prisma.user.update({
+    where: {
+      id: user.id,
+    },
+    data: {
+      isVerified: true,
+      verifyToken: null,
+    },
+  });
+};
+
+export const saveResetToken = async (
+  email,
+  resetToken
+) => {
+  return await prisma.user.update({
+    where: { email },
+    data: { resetToken },
+  });
+};
+
+export const resetUserPassword = async (
+  token,
+  newPassword
+) => {
+  const user = await prisma.user.findFirst({
+    where: {
+      resetToken: token,
+    },
+  });
+
+  if (!user) {
+    throw new Error("Invalid token");
+  }
+
+  const hashedPassword = await bcrypt.hash(
+    newPassword,
+    10
+  );
+
+  return await prisma.user.update({
+    where: {
+      id: user.id,
+    },
+    data: {
+      password: hashedPassword,
+      resetToken: null,
+    },
+  });
+};
