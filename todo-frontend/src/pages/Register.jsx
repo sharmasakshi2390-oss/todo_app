@@ -7,20 +7,36 @@ function Register() {
   const [fullname, setFullname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [success, setSuccess] = useState("");
+  const [error, setError] = useState("");
+
   const navigate = useNavigate();
 
   const handleRegister = async () => {
     try {
+      setError("");
       const res = await api.post("/users/register", {
         fullname,
         email,
         password,
       });
 
+      setSuccess(
+"Registration successful. Please check your email and verify your account."
+);
+
       console.log(res.data);
 
-      navigate("/login");
+setTimeout(() => {
+  navigate("/login");
+}, 3000);
+
     } catch (error) {
+      setSuccess("");
+setError(
+error.response?.data?.message || "Registration failed"
+);
+
     console.log("Register Error:", error.response?.data);
     }
   };
@@ -71,6 +87,21 @@ function Register() {
   >
     Register
   </button>
+
+  {success && (
+
+  <p className="text-green-400 text-center mt-3">
+    {success}
+  </p>
+)}
+
+{error && (
+
+  <p className="text-red-400 text-center mt-3">
+    {error}
+  </p>
+)}
+
 
   <p className="text-center text-white mt-4">
     Already have an account?{" "}

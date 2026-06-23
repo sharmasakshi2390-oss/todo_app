@@ -27,8 +27,11 @@ const handleLogin = async () => {
   } catch (error) {
     console.log(error);
     console.log(error.response?.data);
-    setError("Invalid email or password");
-  }
+    setError(
+      error.response?.data?.message || 
+      "Invalid email or password"
+  );
+}
 };
 
 useEffect(() => {
@@ -93,7 +96,18 @@ useEffect(() => {
   </Link>
 </p>
 
-      {error && ( <p className="text-red-500 text-center mt-2 font-semibold"> {error} </p> )}
+      {error && (
+
+  <p
+    className={`text-center mt-2 font-semibold ${
+      error === "Please verify your email first"
+        ? "text-green-400"
+        : "text-red-500"
+    }`}
+  >
+    {error}
+  </p>
+)}
 
       <p className="text-center text-white mt-4">
         Don't have an account?{" "}

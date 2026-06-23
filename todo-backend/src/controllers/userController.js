@@ -83,7 +83,7 @@ export const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   const user = await findUserByEmail(email);
-
+  console.log("login user : ",user)
   if (!user.isVerified) {
     return res.status(401).json({
       message: "Please verify your email first",
