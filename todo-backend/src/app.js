@@ -4,6 +4,7 @@ import userRoutes from "./routes/userRoutes.js";
 import todoRoutes from "./routes/todoRoutes.js";
 import rateLimit from "express-rate-limit";
 const app = express();
+app.set("trust proxy", 1);
 
 const limiter = rateLimit({
     windowMs: 15 * 20 * 1000, //20 s
