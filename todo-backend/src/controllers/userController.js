@@ -84,11 +84,12 @@ export const loginUser = async (req, res) => {
 
   const user = await findUserByEmail(email);
   console.log("login user : ",user)
-  if (!user.isVerified) {
-    return res.status(401).json({
-      message: "Please verify your email first",
-    });
-  }
+
+  // if (!user.isVerified) {
+  //   return res.status(401).json({
+  //     message: "Please verify your email first",
+  //   });
+  // }
 
   const isMatch = await bcrypt.compare(
     password,
