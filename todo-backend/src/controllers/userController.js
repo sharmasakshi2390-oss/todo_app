@@ -41,20 +41,20 @@ export const registerUser = async (req, res) => {
     verifyToken,
   });
 
-  await transporter.sendMail({
-    from: process.env.EMAIL_USER,
-    to: email,
-    subject: "Verify Your Email",
-    html: `
-      <h2>Email Verification</h2>
+  // await transporter.sendMail({
+  //   from: process.env.EMAIL_USER,
+  //   to: email,
+  //   subject: "Verify Your Email",
+  //   html: `
+  //     <h2>Email Verification</h2>
 
-      <p>Click below link:</p>
+  //     <p>Click below link:</p>
 
-      <a href="http://localhost:5000/api/users/verify-email/${verifyToken}">
-        Verify Email
-      </a>
-    `,
-  });
+  //     <a href="http://localhost:5000/api/users/verify-email/${verifyToken}">
+  //       Verify Email
+  //     </a>
+  //   `,
+  // });
 
   res.status(201).json({
     message:
